@@ -1,26 +1,51 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as path from 'path';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    let disposable = vscode.commands.registerCommand('SageTools.runSage', () => {
+        let editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showInformationMessage('No editor is active');
+            return;
+        }
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "SageTools" is now active!');
+        let filePath = editor.document.fileName;
+        if (!filePath.endsWith('.sage')) {
+            vscode.window.showInformationMessage('Not a Sage file');
+            return;
+        }
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('SageTools.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from SageTools!');
-	});
+        // Extract the file name from the file path
+		let directory = path.dirname(filePath);
+        let fileName = path.basename(filePath);
+		let baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+        
+        const config = vscode.workspace.getConfiguration('SageTools');
+        let warnSyntaxDifferences = config.get<boolean>('warnSyntaxDifferences');
 
-	context.subscriptions.push(disposable);
+        let terminal: vscode.Terminal | undefined;
+        vscode.window.terminals.forEach(term => {
+            if (term.name === `Sage: ${baseName}`) {
+                terminal = term;
+            }
+        });
+
+        // If Sage terminal is not found, execute the file there
+        // Create a new terminal with the file name in the title
+		if (!terminal) {
+            terminal = vscode.window.createTerminal(`Sage: ${baseName}`);
+        };
+        terminal.show();
+
+        if (warnSyntaxDifferences) {
+            vscode.window.showWarningMessage("warn - `^`: power, `^^`: XOR");
+        }
+
+        // Execute the SageMath file using the command line in the new terminal
+        terminal.sendText(`cd ${directory} && sage '${fileName}' ; rm ${fileName}.py`);        
+    });
+
+    context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}

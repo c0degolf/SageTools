@@ -12,13 +12,39 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "SageTools.helloWorld",
-        "title": "Hello World"
+      "languages": [
+        {
+          "id": "sage",
+          "aliases": ["Sage", "sage"],
+          "extensions": [".sage"]
+        }
+      ],
+      "commands": [
+        {
+          "command": "SageTools.runSage",
+          "title": "Run Sage File"
+        }
+      ],
+      "menus": {
+        "editor/title": [
+          {
+            "command": "SageTools.runSage",
+            "when": "editorLangId == 'sage'",
+            "group": "navigation"
+          }
+        ]
       }
-    ]
-  },
+    },
+    "configuration": {
+      "title": "SageTools Configuration",
+      "properties": {
+        "SageTools.warnSyntaxDifferences": {
+          "type": "boolean",
+          "default":false,
+          "description": "Warn about syntax differences when converting Sage files to Python."
+        }
+      }
+    },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
