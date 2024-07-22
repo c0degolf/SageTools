@@ -3,6 +3,11 @@
   "displayName": "SageTools",
   "description": "something awesome for sage",
   "version": "0.0.1",
+  "publisher": "c0degolf",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/c0degolf/SageTools"
+  },
   "engines": {
     "vscode": "^1.91.0"
   },
