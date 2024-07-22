@@ -21,15 +21,7 @@
       {
         "id": "sage",
         "aliases": ["Sage", "sage"],
-        "extensions": [".sage"],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-      "language": "sage",
-      "scopeName": "source.sage",
-      "path": "./syntaxes/sage.tmLanguage.json"
+        "extensions": [".sage"]
       }
     ],
     "commands": [
