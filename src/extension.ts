@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let baseName = fileName.substring(0, fileName.lastIndexOf('.'));
         
         const config = vscode.workspace.getConfiguration('SageTools');
-        let warnSyntaxDifferences = config.get<boolean>('warnSyntaxDifferences');
+        const warnSyntaxDifferences = config.get<boolean>('warnSyntaxDifferences');
 
         let terminal: vscode.Terminal | undefined;
         vscode.window.terminals.forEach(term => {
@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
         terminal.show();
 
         if (warnSyntaxDifferences) {
-            vscode.window.showWarningMessage("warn - `^`: power, `^^`: XOR");
+            vscode.window.showWarningMessage("^: power\n^^: XOR");
         }
 
         // Execute the SageMath file using the command line in the new terminal

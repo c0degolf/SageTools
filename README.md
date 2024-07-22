@@ -7,5 +7,5 @@ SageTools
 
 ## TODO
 1. VScode extension
-	+ [ ] auto delete `.sage.py` file
+	+ [x] auto delete `.sage.py` file
 	+ [ ] something awesome

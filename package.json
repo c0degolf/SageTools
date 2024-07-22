@@ -17,39 +17,47 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-      "languages": [
-        {
-          "id": "sage",
-          "aliases": ["Sage", "sage"],
-          "extensions": [".sage"]
-        }
-      ],
-      "commands": [
+    "languages": [
+      {
+        "id": "sage",
+        "aliases": ["Sage", "sage"],
+        "extensions": [".sage"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+      "language": "sage",
+      "scopeName": "source.sage",
+      "path": "./syntaxes/sage.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "SageTools.runSage",
+        "title": "Run Sage File"
+      }
+    ],
+    "menus": {
+      "editor/title": [
         {
           "command": "SageTools.runSage",
-          "title": "Run Sage File"
+          "when": "editorLangId == 'sage'",
+          "group": "navigation"
         }
-      ],
-      "menus": {
-        "editor/title": [
-          {
-            "command": "SageTools.runSage",
-            "when": "editorLangId == 'sage'",
-            "group": "navigation"
-          }
-        ]
-      }
+      ]
     },
     "configuration": {
       "title": "SageTools Configuration",
       "properties": {
         "SageTools.warnSyntaxDifferences": {
           "type": "boolean",
-          "default":false,
+          "default": true,
           "description": "Warn about syntax differences when converting Sage files to Python."
         }
       }
-    },
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
