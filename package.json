@@ -12,9 +12,9 @@
     "vscode": "^1.91.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
   ],
-  "activationEvents": [],
+  "activationEvents": [  ],
   "main": "./out/extension.js",
   "contributes": {
     "languages": [
@@ -26,21 +26,37 @@
     ],
     "commands": [
       {
-        "command": "SageTools.runSage",
-        "title": "Run Sage File"
+        "command": "SageTools.run",
+        "title": "Run"
+      },
+      {
+        "command": "SageTools.compile",
+        "title": "Compile"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "SageTools.comment",
+        "key": "shift+/",
+        "when": "editorTextFocus"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "command": "SageTools.runSage",
+          "command": "SageTools.run",
+          "when": "editorLangId == 'sage'",
+          "group": "navigation"
+        },
+        {
+          "command": "SageTools.compile",
           "when": "editorLangId == 'sage'",
           "group": "navigation"
         }
       ]
     },
     "configuration": {
-      "title": "SageTools Configuration",
+      "title": "SageTools",
       "properties": {
         "SageTools.warnSyntaxDifferences": {
           "type": "boolean",
