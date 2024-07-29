@@ -34,13 +34,6 @@
         "title": "Compile"
       }
     ],
-    "keybindings": [
-      {
-        "command": "SageTools.comment",
-        "key": "shift+/",
-        "when": "editorTextFocus"
-      }
-    ],
     "menus": {
       "editor/title": [
         {
